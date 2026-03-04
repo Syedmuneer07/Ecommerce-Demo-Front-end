@@ -1,0 +1,407 @@
+/* ========================================
+   ORDERS PAGE STYLES
+   Using React Bootstrap + Custom Styles
+   Primary: #1a1a63
+   Secondary: #33337d
+   Text: white
+   Border: #e3dce3
+   ======================================== */
+
+/* CSS Variables */
+:root {
+  --primary-color: #1a1a63;
+  --secondary-color: #33337d;
+  --text-color: white;
+  --border-color: #e3dce3;
+  --primary-hover: #151552;
+  --secondary-hover: #28286b;
+  --success-color: #28a745;
+  --warning-color: #ffc107;
+  --info-color: #17a2b8;
+}
+
+/* Orders Container */
+.orders-container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+  padding: 60px 20px;
+  position: relative;
+  overflow: hidden;
+}
+
+.orders-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(circle at 20% 80%, rgba(255,255,255,0.1) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(255,255,255,0.1) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+/* Orders Heading */
+.orders-container h1 {
+  color: var(--text-color);
+  font-size: 2.5rem;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 40px;
+  text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+  position: relative;
+  z-index: 1;
+}
+
+/* Orders List */
+.orders-list {
+  position: relative;
+  z-index: 1;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+/* Order Card */
+.order-card {
+  background: var(--text-color);
+  border-radius: 15px;
+  padding: 25px;
+  margin-bottom: 25px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.order-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 5px;
+  height: 100%;
+  background: linear-gradient(180deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+}
+
+.order-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+}
+
+/* Order ID */
+.order-card h3 {
+  color: var(--primary-color);
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-bottom: 15px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid var(--border-color);
+}
+
+/* Order Details */
+.order-card p {
+  color: #555;
+  font-size: 1rem;
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.order-card p strong {
+  color: var(--primary-color);
+  font-weight: 600;
+}
+
+/* Payment Method Badge */
+.order-card .payment-method {
+  display: inline-block;
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.order-card .payment-method.razorpay {
+  background: linear-gradient(135deg, #3399cc 0%, #1a8cb8 100%);
+  color: white;
+}
+
+.order-card .payment-method.cod {
+  background: linear-gradient(135deg, var(--success-color) 0%, #218838 100%);
+  color: white;
+}
+
+/* Order Status Badge */
+.order-card .order-status {
+  display: inline-block;
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.order-card .order-status.pending {
+  background: linear-gradient(135deg, var(--warning-color) 0%, #e0a800 100%);
+  color: #333;
+}
+
+.order-card .order-status.processing {
+  background: linear-gradient(135deg, var(--info-color) 0%, #138496 100%);
+  color: white;
+}
+
+.order-card .order-status.shipped {
+  background: linear-gradient(135deg, #6f42c1 0%, #5a32a3 100%);
+  color: white;
+}
+
+.order-card .order-status.delivered {
+  background: linear-gradient(135deg, var(--success-color) 0%, #218838 100%);
+  color: white;
+}
+
+.order-card .order-status.cancelled {
+  background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+  color: white;
+}
+
+/* Ordered Products Section */
+.ordered-products {
+  margin-top: 20px;
+  padding-top: 15px;
+  border-top: 1px solid var(--border-color);
+}
+
+.ordered-products h4 {
+  color: var(--primary-color);
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 15px;
+}
+
+/* Individual Ordered Product */
+.ordered-product {
+  background: #f8f9fa;
+  border-radius: 8px;
+  padding: 12px 15px;
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: all 0.3s ease;
+}
+
+.ordered-product:hover {
+  background: #e9ecef;
+  transform: translateX(5px);
+}
+
+.ordered-product p {
+  color: #333;
+  font-size: 0.95rem;
+  margin: 0;
+  display: block;
+  text-align: left;
+}
+
+.ordered-product .product-quantity {
+  color: var(--primary-color);
+  font-weight: 600;
+  background: rgba(26, 26, 99, 0.1);
+  padding: 4px 10px;
+  border-radius: 15px;
+  font-size: 0.85rem;
+}
+
+/* Empty Orders State */
+.orders-container .empty-orders {
+  text-align: center;
+  padding: 60px 20px;
+  color: var(--text-color);
+  position: relative;
+  z-index: 1;
+}
+
+.orders-container .empty-orders p {
+  font-size: 1.3rem;
+  opacity: 0.9;
+}
+
+/* ========================================
+   RESPONSIVE DESIGN - ALL VIEWPORTS
+   ======================================== */
+
+/* Extra Small Devices (Phones < 576px) */
+@media (max-width: 575px) {
+  .orders-container {
+    padding: 40px 15px;
+  }
+  
+  .orders-container h1 {
+    font-size: 1.75rem;
+    margin-bottom: 30px;
+  }
+  
+  .order-card {
+    padding: 15px;
+    margin-bottom: 15px;
+  }
+  
+  .order-card h3 {
+    font-size: 1rem;
+  }
+  
+  .order-card p {
+    font-size: 0.9rem;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
+  }
+  
+  .ordered-product {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+}
+
+/* Small Devices (Landscape Phones 576px - 767px) */
+@media (min-width: 576px) and (max-width: 767px) {
+  .orders-container h1 {
+    font-size: 2rem;
+  }
+  
+  .order-card h3 {
+    font-size: 1.1rem;
+  }
+}
+
+/* Medium Devices (Tablets 768px - 991px) */
+@media (min-width: 768px) and (max-width: 991px) {
+  .orders-container h1 {
+    font-size: 2.25rem;
+  }
+}
+
+/* Large Devices (Desktops 992px - 1199px) */
+@media (min-width: 992px) and (max-width: 1199px) {
+  .orders-container h1 {
+    font-size: 2.5rem;
+  }
+}
+
+/* Extra Large Devices (Large Desktops 1200px+) */
+@media (min-width: 1200px) {
+  .orders-container {
+    padding: 80px 40px;
+  }
+  
+  .orders-container h1 {
+    font-size: 3rem;
+    margin-bottom: 50px;
+  }
+  
+  .orders-list {
+    max-width: 900px;
+  }
+  
+  .order-card {
+    padding: 30px;
+  }
+}
+
+/* Ultra Wide Devices (1400px+) */
+@media (min-width: 1400px) {
+  .orders-container h1 {
+    font-size: 3.25rem;
+  }
+  
+  .orders-list {
+    max-width: 1000px;
+  }
+}
+
+/* Animation */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.order-card {
+  animation: fadeInUp 0.5s ease forwards;
+}
+
+.order-card:nth-child(1) { animation-delay: 0.1s; }
+.order-card:nth-child(2) { animation-delay: 0.15s; }
+.order-card:nth-child(3) { animation-delay: 0.2s; }
+.order-card:nth-child(4) { animation-delay: 0.25s; }
+.order-card:nth-child(5) { animation-delay: 0.3s; }
+
+/* Focus Visible */
+button:focus-visible {
+  outline: 2px solid var(--text-color);
+  outline-offset: 2px;
+}
+
+/* Selection */
+::selection {
+  background: var(--primary-color);
+  color: var(--text-color);
+}
+
+/* Reduced Motion for Accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .order-card {
+    transition: none;
+    animation: none;
+  }
+  
+  .ordered-product {
+    transition: none;
+  }
+}
+
+/* High DPI / Retina Displays */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .order-card {
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+  }
+}
+
+/* Print Styles */
+@media print {
+  .orders-container {
+    background: white;
+    padding: 20px;
+  }
+  
+  .orders-container::before {
+    display: none;
+  }
+  
+  .orders-container h1 {
+    color: #333;
+    text-shadow: none;
+  }
+  
+  .order-card {
+    box-shadow: none;
+    border: 1px solid #ccc;
+    break-inside: avoid;
+  }
+  
+  .order-card::before {
+    display: none;
+  }
+}
+
