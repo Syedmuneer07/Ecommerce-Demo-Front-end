@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import "../styles/Login.css";
 import axios from "axios";
+import GoogleLoginButton from "../components/googleLoginButton";
 
 function Login() {
   const handleSubmit = (e) => {
@@ -17,6 +18,11 @@ function Login() {
         console.log(res.data);
         alert("User logged in successfully");
         localStorage.setItem("token", res.data.token);
+        const userData = res.data.token.split(".")[1];
+
+        const decodedUserData = JSON.parse(atob(userData));
+        localStorage.setItem("user", JSON.stringify(decodedUserData));
+
         if (res.data.user.isAdmin) {
           localStorage.setItem("isAdmin", true);
           window.location.href = "/admin";
@@ -99,6 +105,7 @@ function Login() {
                   Sign In
                 </button>
               </form>
+              <GoogleLoginButton/>
 
               <div className="auth-footer text-center">
                 <p className="mb-0">

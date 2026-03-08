@@ -103,6 +103,18 @@
   width: 80%;
 }
 
+/* Admin Link */
+.nav-link.admin-link {
+  background: linear-gradient(135deg, #ffce42 0%, #e6b93d 100%);
+  color: var(--primary-color);
+  font-weight: 600;
+}
+
+.nav-link.admin-link:hover {
+  background: linear-gradient(135deg, #e6b93d 0%, #d4a93a 100%);
+  color: var(--primary-color);
+}
+
 /* Auth Section */
 .header-auth {
   display: flex;

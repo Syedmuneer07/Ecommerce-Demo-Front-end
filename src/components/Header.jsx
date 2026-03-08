@@ -4,18 +4,30 @@ import '../styles/Header.css';
 
 function Header() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Check if user is logged in
+    // Check if user is logged in and if admin
     const token = localStorage.getItem('token');
     setIsLoggedIn(!!token);
+    
+    if (token) {
+      try {
+       const decoded = JSON.parse(atob(token.split('.')[1]));
+        setIsAdmin(decoded.isAdmin || false);
+      } catch (err) {
+        setIsAdmin(false);
+        console.error('Error decoding token:', err);
+      }
+    }
   }, []);
 
   const handleLogout = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('cart');
     setIsLoggedIn(false);
+    setIsAdmin(false);
     navigate('/login');
   };
 
@@ -38,6 +50,19 @@ function Header() {
               <li className="nav-item">
                 <Link to="/orders" className="nav-link">My Orders</Link>
               </li>
+            )}
+            {isAdmin && (
+              <>
+                <li className="nav-item">
+                  <Link to="/admin" className="nav-link admin-link">Admin</Link>
+                </li>
+                <li className="nav-item">
+                  <Link to="/category" className="nav-link">Categories</Link>
+                </li>
+                <li className="nav-item">
+                  <Link to="/admin/products" className="nav-link">Products</Link>
+                </li>
+              </>
             )}
           </ul>
         </nav>

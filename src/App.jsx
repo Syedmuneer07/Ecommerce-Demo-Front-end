@@ -8,6 +8,8 @@ import Products from './pages/Products'
 import Cart from './pages/Cart'
 import Order from './pages/Order'
 import AdminDashboard from './pages/AdminDashboard'
+import Category from './pages/AdminCategory'
+import AdminProducts from './pages/AdminProducts'
 import Header from './components/Header'
 
 function App() {
@@ -26,6 +28,8 @@ function App() {
             <Route path="/cart" element={<Cart/>} />
             <Route path='/orders' element={<Order/>} />
             <Route path='/admin' element={<AdminDashboard/>} />
+            <Route path='/category' element={<Category/>} />
+            <Route path='/admin/products' element={<AdminProducts/>} />
           </Routes>
         </div>
       </BrowserRouter>

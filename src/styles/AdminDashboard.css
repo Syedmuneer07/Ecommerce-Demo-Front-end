@@ -288,6 +288,64 @@
 }
 
 /* ========================================
+   PAGINATION STYLES
+   ======================================== */
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin-top: 30px;
+  padding: 20px 0;
+  flex-wrap: wrap;
+}
+
+.pagination-btn {
+  padding: 10px 16px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.pagination-btn:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.5);
+  transform: translateY(-2px);
+}
+
+.pagination-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.pagination-btn.active {
+  background: white;
+  color: var(--primary-color);
+  border-color: white;
+}
+
+.pagination-pages {
+  display: flex;
+  gap: 8px;
+}
+
+.page-number {
+  min-width: 40px;
+  text-align: center;
+}
+
+.pagination-btn.prev,
+.pagination-btn.next {
+  min-width: 80px;
+}
+
+/* ========================================
    RESPONSIVE DESIGN
    ======================================== */
 
@@ -334,6 +392,23 @@
   .status-select {
     padding: 6px 8px;
     font-size: 0.75rem;
+  }
+  
+  .pagination {
+    gap: 6px;
+  }
+  
+  .pagination-btn {
+    padding: 8px 12px;
+    font-size: 0.8rem;
+  }
+  
+  .pagination-pages {
+    gap: 4px;
+  }
+  
+  .page-number {
+    min-width: 32px;
   }
 }
 
@@ -476,6 +551,10 @@
   }
   
   .action-btn {
+    display: none;
+  }
+  
+  .pagination {
     display: none;
   }
 }

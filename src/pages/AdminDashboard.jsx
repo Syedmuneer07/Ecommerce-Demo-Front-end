@@ -7,22 +7,31 @@ import "../styles/AdminDashboard.css"
 function AdminDashboard() {
     const [orders, setOrders]= useState([]);
     const [selectedStatus, setSelectedStatus] = useState({});
+    const [currentPage, setCurrentPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(1);
+    const [limit] = useState(5);
 
-    const fetchOrders = async () => {
-        axios.get("http://localhost:3000/api/orders/admin/orders",{
+    const fetchOrders = async (page = 1) => {
+        axios.get(`http://localhost:3000/api/orders/admin/orders?page=${page}&limit=${limit}`,{
             headers: {
                 "Authorization": `Bearer ${localStorage.getItem("token")}`
               },
         }).then((res) => {
             console.log(res.data);
-            setOrders(res.data.orders);
+            setOrders(res.data.orders || res.data);
+            // If backend returns pagination info, use it
+            if (res.data.totalPages) {
+                setTotalPages(res.data.totalPages);
+            } else {
+                setTotalPages(1);
+            }
         }).catch((err) => {
             console.log("There was an error", err);
             alert("There was an error, please try again");
         });
     };
     useEffect(() => {
-        fetchOrders();
+        fetchOrders(currentPage);
     }, []);
 
     const handleStatusChange = async (orderId, newStatus) => {
@@ -37,7 +46,7 @@ function AdminDashboard() {
                 }
             );
             alert("Order status updated successfully!");
-            fetchOrders();
+            fetchOrders(currentPage);
         } catch (err) {
             console.log("Error updating status:", err);
             alert("Failed to update order status");
@@ -58,6 +67,13 @@ function AdminDashboard() {
         }
     };
 
+    const handlePageChange = (newPage) => {
+        if (newPage >= 1 && newPage <= totalPages) {
+            setCurrentPage(newPage);
+            fetchOrders(newPage);
+        }
+    };
+
   return (
     <div className="admin-dashboard-container">
         <h1>Admin Dashboard - All Orders</h1>
@@ -67,6 +83,7 @@ function AdminDashboard() {
                     <p>No orders found.</p>
                 </div>
             ) : (
+                <>
                 <table className="orders-table">
                     <thead>
                         <tr>
@@ -134,6 +151,41 @@ function AdminDashboard() {
                         ))}
                     </tbody>
                 </table>
+                
+                {/* Pagination Component */}
+                {totalPages > 1 && (
+                    <div className="pagination">
+                        <button 
+                            className="pagination-btn prev"
+                            onClick={() => handlePageChange(currentPage - 1)}
+                            disabled={currentPage === 1}
+                        >
+                            Previous
+                        </button>
+                        
+                        <div className="pagination-pages">
+                            {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+                                <button
+                                    key={page}
+                                    className={`pagination-btn page-number ${currentPage === page ? 'active' : ''}`}
+                                    onClick={() => handlePageChange(page)}
+                                >
+                                    {page}
+                                </button>
+                            ))}
+                        </div>
+                        
+                        <button 
+                            className="pagination-btn next"
+                            onClick={() => handlePageChange(currentPage + 1)}
+                            disabled={currentPage === totalPages}
+                        >
+                            Next
+                        </button>
+                    </div>
+                )}
+            
+                </>
             )}
         </div>
     </div>
