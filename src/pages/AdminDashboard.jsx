@@ -12,7 +12,7 @@ function AdminDashboard() {
     const [limit] = useState(5);
 
     const fetchOrders = async (page = 1) => {
-        axios.get(`http://localhost:3000/api/orders/admin/orders?page=${page}&limit=${limit}`,{
+        axios.get(`${import.meta.env.REACT_APP_BACKEND_API_URL}/api/orders/admin/orders?page=${page}&limit=${limit}`,{
             headers: {
                 "Authorization": `Bearer ${localStorage.getItem("token")}`
               },
@@ -37,7 +37,7 @@ function AdminDashboard() {
     const handleStatusChange = async (orderId, newStatus) => {
         try {
             await axios.put(
-                `http://localhost:3000/api/orders/${orderId}`,
+                `${import.meta.env.REACT_APP_BACKEND_API_URL}/api/orders/${orderId}`,
                 { status: newStatus },
                 {
                     headers: {

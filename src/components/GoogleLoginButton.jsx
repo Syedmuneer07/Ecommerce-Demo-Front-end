@@ -4,7 +4,7 @@ import axios from "axios";
 const GoogleLoginButton = () => {
     const handleSuccess = (credentialResponse) => {
         console.log("Google Login Successful",credentialResponse);
-        axios.post("http://localhost:3000/api/auth/google-login",{ token: credentialResponse.credential}).then((res) => {
+        axios.post(`${import.meta.env.REACT_APP_BACKEND_API_URL}/api/auth/google-login`,{ token: credentialResponse.credential}).then((res) => {
             alert("User logged in successfully");
             localStorage.setItem("token", res.data.token);
             window.location.href = "/";
