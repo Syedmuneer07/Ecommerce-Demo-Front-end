@@ -15,7 +15,9 @@ function AdminProducts() {
   const [discountedPrice, setDiscountedPrice] = useState('');
   const [categoryId, setCategoryId] = useState('');
   const [inStock, setInStock] = useState(true);
-  const [images, setImages] = useState('');
+  const [selectedImages, setSelectedImages] = useState([]);
+  const [imagePreview, setImagePreview] = useState([]);
+  const [existingImages, setExistingImages] = useState('');
   const [isActive, setIsActive] = useState(true);
   const [submitting, setSubmitting] = useState(false);
   
@@ -53,6 +55,39 @@ function AdminProducts() {
     } catch (err) {
       console.error('Error fetching categories:', err);
     }
+  };
+
+  // Upload single image to Cloudinary
+  const uploadToCloudinary = async (file) => {
+    const cloudName = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME || 'your-cloud-name';
+    const uploadPreset = import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET || 'your-upload-preset';
+    const url = `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`;
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('upload_preset', uploadPreset);
+    
+    const res = await axios.post(url, formData);
+    return res.data.secure_url || res.data.url;
+  };
+
+  // Handle image file selection
+  const handleImageChange = (e) => {
+    const files = Array.from(e.target.files);
+    if (files.length > 0) {
+      setSelectedImages(files);
+      
+      // Create preview URLs
+      const previews = files.map(file => URL.createObjectURL(file));
+      setImagePreview(previews);
+    }
+  };
+
+  // Remove selected image
+  const removeSelectedImage = (index) => {
+    const newImages = selectedImages.filter((_, i) => i !== index);
+    const newPreviews = imagePreview.filter((_, i) => i !== index);
+    setSelectedImages(newImages);
+    setImagePreview(newPreviews);
   };
 
   useEffect(() => {
@@ -95,18 +130,26 @@ function AdminProducts() {
     setSubmitting(true);
 
     try {
-      const imageArray = images.trim() ? images.split(',').map(img => img.trim()) : [];
+      let imageUrls = [];
+      
+      // Upload images to Cloudinary if files are selected (parallel upload)
+      if (Array.isArray(selectedImages) && selectedImages.length > 0) {
+        imageUrls = await Promise.all(selectedImages.map(f => uploadToCloudinary(f)));
+      } else if (typeof existingImages === 'string' && existingImages.trim()) {
+        // Fallback to text input if no files selected
+        imageUrls = existingImages.split(',').map(s => s.trim()).filter(Boolean);
+      }
       
       await axios.post(
         'http://localhost:3000/api/products/create',
         {
-          title,
-          description,
+          title: title.trim(),
+          description: description.trim(),
           mrpPrice: parseFloat(mrpPrice),
           discountedPrice: parseFloat(discountedPrice),
           categoryId,
           inStock,
-          images: imageArray,
+          images: imageUrls,
           isActive,
         },
         {
@@ -125,7 +168,9 @@ function AdminProducts() {
       setDiscountedPrice('');
       setCategoryId('');
       setInStock(true);
-      setImages('');
+      setSelectedImages([]);
+      setImagePreview([]);
+      setExistingImages('');
       setIsActive(true);
       
       fetchProducts();
@@ -325,13 +370,37 @@ function AdminProducts() {
             </div>
             
             <div className="form-group">
-              <label htmlFor="images">Image URLs</label>
+              <label htmlFor="images">Product Images</label>
+              <input
+                type="file"
+                id="images"
+                accept="image/*"
+                multiple
+                onChange={handleImageChange}
+                className="form-input file-input"
+              />
+              {imagePreview.length > 0 && (
+                <div className="image-preview-container">
+                  {imagePreview.map((preview, index) => (
+                    <div key={index} className="image-preview-item">
+                      <img src={preview} alt={`Preview ${index + 1}`} />
+                      <button
+                        type="button"
+                        className="remove-image-btn"
+                        onClick={() => removeSelectedImage(index)}
+                      >
+                        ×
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              )}
               <input
                 type="text"
-                id="images"
-                value={images}
-                onChange={(e) => setImages(e.target.value)}
-                placeholder="Enter image URLs (comma separated)"
+                id="existingImages"
+                value={existingImages}
+                onChange={(e) => setExistingImages(e.target.value)}
+                placeholder="Or enter image URLs (comma separated)"
                 className="form-input"
               />
             </div>
