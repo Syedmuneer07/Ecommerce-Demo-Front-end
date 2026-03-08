@@ -35,7 +35,7 @@ function Header() {
     <header className="header">
       <div className="header-container">
         <div className="header-logo">
-          <Link to="/">Online Shop</Link>
+          <Link to="/">ShopHub</Link>
         </div>
         
         <nav className="header-nav">

@@ -14,7 +14,7 @@ function Products() {
         console.log(categoryId);
         // Fetch products based on the categoryId
         if(categoryId){
-        axios.get(`${import.meta.env.REACT_APP_BACKEND_API_URL}/api/products/list?categoryId=${categoryId}`, {
+        axios.get(`${import.meta.env.VITE_REACT_APP_BACKEND_API_URL}/api/products/list?categoryId=${categoryId}`, {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem("token")}`
             }

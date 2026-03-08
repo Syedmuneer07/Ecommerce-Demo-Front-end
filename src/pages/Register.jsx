@@ -14,7 +14,7 @@ function Register() {
     const password = e.target.password.value;
 
     axios
-      .post(`${import.meta.env.REACT_APP_BACKEND_API_URL}/api/auth/register`, {
+      .post(`${import.meta.env.VITE_REACT_APP_BACKEND_API_URL}/api/auth/register`, {
         name,
         email,
         address,

@@ -77,7 +77,7 @@ function Cart() {
        description:"Thank you for shopping with us",
        handler:function (response){
         alert(" Payment successful, payment id:"+response.razorpay_payment_id);
-        axios.post(`${import.meta.env.REACT_APP_BACKEND_API_URL}/api/orders/create`,{
+        axios.post(`${import.meta.env.VITE_REACT_APP_BACKEND_API_URL}/api/orders/create`,{
           products:productsWithquantity,
           totalAmount:totalValue,
           paymentMethod:"Razorpay",
@@ -123,7 +123,7 @@ function Cart() {
     }
 
     try {
-      const response = await axios.post(`${import.meta.env.REACT_APP_BACKEND_API_URL}/api/orders/create`, {
+      const response = await axios.post(`${import.meta.env.VITE_REACT_APP_BACKEND_API_URL}/api/orders/create`, {
         products: productsWithquantity,
         totalAmount: totalValue,
         paymentMethod: "COD",

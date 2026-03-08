@@ -33,7 +33,7 @@ function AdminProducts() {
 
   const fetchProducts = async () => {
     try {
-      const response = await axios.get(`${import.meta.env.REACT_APP_BACKEND_API_URL}/api/products/list`, {
+      const response = await axios.get(`${import.meta.env.VITE_REACT_APP_BACKEND_API_URL}/api/products/list`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
         },
@@ -46,7 +46,7 @@ function AdminProducts() {
 
   const fetchCategories = async () => {
     try {
-      const response = await axios.get(`${import.meta.env.REACT_APP_BACKEND_API_URL}/api/category/list`, {
+      const response = await axios.get(`${import.meta.env.VITE_REACT_APP_BACKEND_API_URL}/api/category/list`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
         },
@@ -141,7 +141,7 @@ function AdminProducts() {
       }
       
       await axios.post(
-        `${import.meta.env.REACT_APP_BACKEND_API_URL}/api/products/create`,
+        `${import.meta.env.VITE_REACT_APP_BACKEND_API_URL}/api/products/create`,
         {
           title: title.trim(),
           description: description.trim(),
@@ -188,7 +188,7 @@ function AdminProducts() {
     }
 
     try {
-      await axios.delete(`${import.meta.env.REACT_APP_BACKEND_API_URL}/api/products/${productId}`, {
+      await axios.delete(`${import.meta.env.VITE_REACT_APP_BACKEND_API_URL}/api/products/${productId}`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
         },
@@ -233,7 +233,7 @@ function AdminProducts() {
       const imageArray = editImages.trim() ? editImages.split(',').map(img => img.trim()) : [];
       
       await axios.put(
-        `${import.meta.env.REACT_APP_BACKEND_API_URL}/api/products/${productId}`,
+        `${import.meta.env.VITE_REACT_APP_BACKEND_API_URL}/api/products/${productId}`,
         {
           title: editTitle,
           description: editDescription,

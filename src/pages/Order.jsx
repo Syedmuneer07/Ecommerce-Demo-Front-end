@@ -7,7 +7,7 @@ import '../styles/Order.css';
 function Order() {
     const [orders, setOrders] = useState([]);
     const fetchOrders = async () => {
-        axios.get(`${import.meta.env.REACT_APP_BACKEND_API_URL}/api/orders/`,{
+        axios.get(`${import.meta.env.VITE_REACT_APP_BACKEND_API_URL}/api/orders/`,{
             headers: {
                 "Authorization": `Bearer ${localStorage.getItem("token")}`,
               },

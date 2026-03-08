@@ -9,7 +9,7 @@ function Home() {
 
     const fetchCategories = async () => {
        
-          axios.get(`${import.meta.env.REACT_APP_BACKEND_API_URL}/api/category/list`,
+          axios.get(`${import.meta.env.VITE_REACT_APP_BACKEND_API_URL}/api/category/list`,
             {
               headers: {
                 "Authorization": `Bearer ${localStorage.getItem("token")}`,
